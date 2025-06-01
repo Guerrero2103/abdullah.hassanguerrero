@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Evenementenlijst</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<nav>
+    <a th:href="@{/}">Anderlecht NGO</a> |
+    <a th:href="@{/events/new}">Nieuw evenement</a> |
+    <a th:href="@{/about}">Over ons</a>
+</nav>
+
+<h1>Evenementen</h1>
+
+<a href="/events/new">➕ Nieuw evenement aanmaken</a>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Titel</th>
+        <th>Organisatie</th>
+        <th>Datum & Tijd</th>
+        <th>Locatie</th>
+        <th>Acties</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="event : ${events}">
+        <td th:text="${event.title}">Titel</td>
+        <td th:text="${event.organization}">Organisatie</td>
+        <td th:text="${event.dateTime != null} ? ${#temporals.format(event.dateTime, 'dd-MM-yyyy HH:mm')} : 'n.v.t.'">Datum</td>
+        <td th:text="${event.location != null} ? ${event.location.address} : 'Geen locatie'">Locatie</td>
+        <td>
+            <a th:href="@{'/events/' + ${event.id}}">Details</a>
+            <form th:action="@{'/events/' + ${event.id} + '/delete'}" method="post" style="display:inline">
+                <button type="submit" onclick="return confirm('Weet je zeker dat je dit evenement wilt verwijderen?')">Verwijder</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<footer>
+    <p>&copy; 2025 Anderlecht NGO</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nieuw Evenement</title>
+    <link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body>
+
+<nav>
+    <a th:href="@{/}">Anderlecht NGO</a> |
+    <a th:href="@{/events/new}">Nieuw evenement</a> |
+    <a th:href="@{/about}">Over ons</a>
+</nav>
+
+<h1>Nieuw Evenement</h1>
+
+<form th:action="@{/events}" th:object="${event}" method="post">
+    <label>Titel:
+        <input type="text" th:field="*{title}" required />
+    </label><br/>
+
+    <label>Beschrijving:
+        <textarea th:field="*{description}" required></textarea>
+    </label><br/>
+
+    <label>Datum & tijd:
+        <input type="datetime-local" th:field="*{dateTime}" required />
+    </label><br/>
+
+    <label>Organisatie:
+        <input type="text" th:field="*{organization}" required />
+    </label><br/>
+
+    <label>Email:
+        <input type="email" th:field="*{contactEmail}" required />
+    </label><br/>
+
+    <label>Locatie:
+        <select th:field="*{location.id}" required>
+            <option th:each="loc : ${locations}"
+                    th:value="${loc.id}"
+                    th:text="${loc.address + ' (capaciteit: ' + loc.capacity + ')'}">
+            </option>
+        </select>
+    </label><br/>
+
+    <button type="submit">Opslaan</button>
+</form>
+
+<footer>
+    <p>&copy; 2025 Anderlecht NGO</p>
+</footer>
+
+</body>
+</html>
